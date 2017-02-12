@@ -1,0 +1,46 @@
+<div class="container">
+  Klik op een taak om deze aan te passen.<br><br>
+  <div class="bd-content">  
+    <ul class="list-group"> 
+      <li class="list-group-item" *ngFor="let ChecklistItem of checkListItems" >
+        <span (click)="selectCheckListItem(ChecklistItem)">
+          {{ChecklistItem.title }} - {{ChecklistItem.task}}
+        </span>
+        <span>
+          <input type="checkbox" name="finished" [(ngModel)]="ChecklistItem.finished" (click)="toggleCheckListItemFinished(ChecklistItem)">
+          <button (click)="deleteCheckListItem(ChecklistItem)">Verwijderen</button>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="selectedCheckListItem">
+    <h3> check list item aanpassen</h3>  
+    <div class="form-group">
+      <label for="title">Titel</label>
+        <input class="form-control" type="text" placeholder="title" autofocus="" name="title"
+            [(ngModel)]="selectedCheckListItem.title" 
+            (keydown.enter)="updateCheckListItem(selectedCheckListItem)"
+        >
+      <label for="title">Titel</label>  
+        <input class="form-control" type="text" placeholder="task" autofocus="" name="task"
+            [(ngModel)]="selectedCheckListItem.task" 
+            (keydown.enter)="updateCheckListItem(selectedCheckListItem)"
+        >
+      <button (click)="updateCheckListItem(selectedCheckListItem)">Aanpassen</button>
+    </div>
+  </div>
+
+  <div>
+    <form>
+      <div class="form-group">
+      <h3> check list item toevoegen</h3>
+        <label for="title">Titel</label>
+          <input class="form-control" type="text" name="title" placeholder="title" autofocus="" #title (keyup.enter)="addCheckListItem(title.value, task.value)">
+        <label for="task">Task</label>
+          <input class="form-control" type="text" name="task" placeholder="task" autofocus="" #task (keyup.enter)="addCheckListItem(title.value, task.value)">
+        <button (click)="addCheckListItem(title.value, task.value)">Toevoegen</button>
+      </div>
+    </form>
+  </div>
+</div>
